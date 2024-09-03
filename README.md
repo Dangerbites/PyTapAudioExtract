@@ -14,3 +14,5 @@ A python module that allows you to get data from hyperPad .tap files.
 - `get_asset_path(path, format, get_hd)` - Usually if you get a objects asset path, it will just be a path to the folder that has the asset in it, you can put that in here to get the actual path to the asset. (hyperPad stores a hd and non hd version of images, the non hd is half the normal size, so if you wanna get the HD make sure get_hd is `True`.)
 - `get_image_dimensions(path, format, get_hd)` - Gets the dimensions of an image, same inputs as `get_asset_path()`
 - `get_asset_size(path, format, get_hd)` - Gets the size of an asset in Bytes.
+
+## Required Libraries
