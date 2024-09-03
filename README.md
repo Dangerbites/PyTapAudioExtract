@@ -10,7 +10,7 @@ A python module that allows you to get data from hyperPad .tap files.
 - `get_behaviours()` - Returns a JSON of every object, and their behaviours.  
 - `get_layers()` - Returns a JSON of every Layer in the project, each layer has its scene and if its a ui layer.  
 - `get_project()` - Gets everything and compiles it into 1 JSON.  
-- `extract_assets(to, format)` - Extracts all assets with the `format` to `to` (format `format` like `".png"`)  
+- `extract_assets(to, format, compress)` - Extracts all assets with the `format` to `to` (format `format` like `".png"`), `compress` will resize all the images to their dimensions divided by `compress`, good if you wanna port a hyperpad game to hardware with little VRAM.    
 - `get_asset_path(path, format, get_hd)` - Usually if you get a objects asset path, it will just be a path to the folder that has the asset in it, you can put that in here to get the actual path to the asset. (hyperPad stores a hd and non hd version of images, the non hd is half the normal size, so if you wanna get the HD make sure get_hd is `True`.)  
 - `get_image_dimensions(path, format, get_hd)` - Gets the dimensions of an image, same inputs as `get_asset_path()`  
 - `get_asset_size(path, format, get_hd)` - Gets the size of an asset in Bytes.  
