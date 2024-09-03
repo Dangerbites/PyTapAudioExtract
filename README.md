@@ -16,3 +16,16 @@ A python module that allows you to get data from hyperPad .tap files.
 - `get_asset_size(path, format, get_hd)` - Gets the size of an asset in Bytes.
 
 ## Required Libraries
+This is everything thats imported in the .py, youre a big boy im sure youll figure it out.  
+```
+import zipfile
+import plistlib
+import json
+import io
+import os
+import sqlite3
+import base64
+import tempfile
+from plistlib import UID
+from PIL import Image
+```
