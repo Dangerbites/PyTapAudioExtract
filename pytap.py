@@ -236,6 +236,8 @@ def get_objects():
             object_secondary_details = object_positions[pk]
             ui_element = False
             layer = object_secondary_details["ZLAYERS"]
+            if not layer:
+                layer = 1
             if object_secondary_details["ZUNITX"] == 2:
                 ui_element = True
 
@@ -253,6 +255,8 @@ def get_objects():
             for y in level_json["ZCOLLISIONDATA"]:
                 if y["ZOBJECT"] == pk:
                     collision_points[y["ZINDEX"]] = (y["ZX_POS"], -y["ZY_POS"])
+
+            print(layer_scenes)
 
             object_data = {
                 "name": object_details["ZNAME"],
@@ -336,15 +340,21 @@ def get_behaviours():
     
     return behaviours_organised
 
-def extract_assets(to, format):
+def extract_assets(to, format, compress = 0):
     name = None
     for file in tap_data.filelist:
         if file.filename.endswith(format):
             name = file.filename
 
-        if name:
             try:
                 tap_data.extract(name, to)
+
+                if not compress == 0:
+                    image = Image.open(to + name)
+                    width, height = image.size
+                    new_size = (int(width / compress), int(height / compress))
+                    resized_image = image.resize(new_size)
+                    resized_image.save(to + name, optimize=True, quality=50)
             except Exception as e:
                 print(f"Error extracting {name}: {e}")
                 pass
@@ -356,7 +366,7 @@ def get_asset_path(path, format, get_hd = False):
                 if file.filename.endswith("-hd.png"):
                     return file.filename
             else:
-                if not file.filename.endswith("-hd.png"):
+                if not file.filename.endswith("-hd.png") and not file.filename.endswith(".thumbnail.png"):
                     return file.filename
 
 def get_image_dimensions(path, format, get_hd = False):
@@ -369,7 +379,7 @@ def get_image_dimensions(path, format, get_hd = False):
                         width, height = image.size
                         return (width, height)
             else:
-                if not file.filename.endswith("-hd.png"):
+                if not file.filename.endswith("-hd.png") and not file.filename.endswith(".thumbnail.png"):
                     with tap_data.open(file.filename) as image_file:
                         image = Image.open(image_file)
                         width, height = image.size
@@ -382,7 +392,7 @@ def get_asset_size(path, format, get_hd = False):
                 if file.filename.endswith("-hd.png"):
                     return file.file_size
             else:
-                if not file.filename.endswith("-hd.png"):
+                if not file.filename.endswith("-hd.png") and not file.filename.endswith(".thumbnail.png"):
                     return file.file_size
     
 def get_layers():
