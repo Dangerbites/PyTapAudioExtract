@@ -100,7 +100,10 @@ def convert_bplist_to_json(bplist, fix):
                         ns_json = {}
                         index = 0
                         for x in final_json[y]["NS.objects"]:
-                            if type(json_data["$objects"]) == 'dict':
+                            if not fix:
+                                if type(json_data["$objects"]) == 'list' or type(json_data["$objects"]) == 'dict':
+                                    ns_json[str(json_data["$objects"][x])] = json_data["$objects"][final_json[y]["NS.objects"][index]]
+                            else:
                                 ns_json[str(json_data["$objects"][x])] = json_data["$objects"][final_json[y]["NS.objects"][index]]
                             index = index + 1
                         new_value = ns_json
